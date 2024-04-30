@@ -1,0 +1,14 @@
+<powershell>
+# Latest Node.js version ki URL
+$latestVersionUrl = (Invoke-WebRequest -Uri "https://nodejs.org/dist/latest/" | Select-String -Pattern 'href="[^"]*node-v(\d+\.\d+\.\d+)-x64\.msi"' | ForEach-Object { $_.Matches.Groups[1].Value })[0]
+$downloadUrl = "https://nodejs.org/dist/latest/$latestVersionUrl/node-v$latestVersionUrl-x64.msi"
+
+# Node.js installer ko download karo
+Invoke-WebRequest -Uri $downloadUrl -OutFile "$env:TEMP\nodejs-installer.msi"
+
+# Node.js ko chupchap install karo
+Start-Process -FilePath msiexec.exe -ArgumentList "/i $env:TEMP\nodejs-installer.msi /qn" -Wait
+
+# User Data script execute hone ke baad khud ko delete karo
+Remove-Item -Path $env:ProgramData\Microsoft\Windows\Start\Menu\Programs\StartUp\InstallNodeJs.ps1 -Force
+</powershell>
