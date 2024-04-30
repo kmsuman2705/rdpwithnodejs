@@ -15,6 +15,3 @@ This script automates the installation of the latest version of Node.js on Windo
 - It then downloads the Node.js installer and installs Node.js silently without any user interaction.
 - After the installation, the script deletes itself to avoid unnecessary clutter.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
